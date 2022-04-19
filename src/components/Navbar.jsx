@@ -13,9 +13,11 @@ import { logo } from "../images";
 
 const Navbar = () => {
   return (
-    <div className="nav-container">
-      {renderLogo()}
-      {renderMenu()}
+    <div className="navbar">
+      <div className="nav-container">
+        {renderLogo()}
+        {renderMenu()}
+      </div>
     </div>
   );
 };

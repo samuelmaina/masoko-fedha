@@ -1,7 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
-
-import { Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { Layout } from "antd";
 
