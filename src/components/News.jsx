@@ -1,7 +1,5 @@
 import React from "react";
 
-import moment from "moment";
-
 import { Select, Typography, Row, Col, Avatar, Card } from "antd";
 import { cryptoNewsApi } from "../services";
 
@@ -10,6 +8,8 @@ const { useGetCryptoNewsQuery } = cryptoNewsApi;
 const { Text, Title } = Typography;
 const { Option } = Select;
 
+const demoImage =
+  "https://www.bing.com/th?id=OVFT.KGwVXyV6CervtpnzPeXcMy&pid=News";
 function News({ simplified }) {
   const { data: cryptoNews, isFetching } = useGetCryptoNewsQuery({
     newsCategory: "Cryptocurrency ",
@@ -29,6 +29,10 @@ function News({ simplified }) {
                 <Title level={4} className="news-title">
                   {news.name}
                 </Title>
+                <img
+                  src={news?.image?.thumbnail?.contentUrl || demoImage}
+                  alt="News"
+                />
               </div>
             </a>
           </Card>
