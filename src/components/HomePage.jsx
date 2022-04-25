@@ -14,13 +14,23 @@ const { useGetCryptosQuery } = cryptoApi;
 const { Title } = Typography;
 
 function HomePage() {
-  const count = 10;
-  const { data, isFetching } = useGetCryptosQuery(count);
+  const introductoryNoOfCryptos = 10;
+  const { data, isFetching } = useGetCryptosQuery(introductoryNoOfCryptos);
 
   const globalStats = data?.data?.stats;
 
   if (isFetching) return <div>Loading...</div>;
 
+  return (
+    <>
+      {renderGlobalStats(globalStats)}
+      {renderTopCryptos(introductoryNoOfCryptos)}
+      {/** the number of news being received is very small hence, only a fixed number of news will be rendered. */}
+      {renderTopNews()}
+    </>
+  );
+}
+function renderGlobalStats(globalStats) {
   const cols = [
     { title: "Total CrypoCurrencies", value: millify(globalStats.total) },
     { title: "Total Exchanges", value: millify(globalStats.totalExchanges) },
@@ -34,16 +44,28 @@ function HomePage() {
         Global Crypto Stats
       </Title>
       <Row>{renderColumns(cols)}</Row>
+    </>
+  );
+}
 
+function renderTopCryptos(noOfCryptos) {
+  return (
+    <>
       <div className="home-heading-container">
         <Title level={2} className="home-title">
-          Top 10 Cryptocurrencies in the World
+          Top {noOfCryptos} Cryptocurrencies in the World
         </Title>
         <Title level={4} className="show-more">
           <Link to="/cryptocurrencies"> Show more</Link>
         </Title>
       </div>
       <Cryptocurrencies simplified />
+    </>
+  );
+}
+function renderTopNews() {
+  return (
+    <>
       <div className="home-heading-container">
         <Title level={2} className="home-title">
           Latest Crypto News
@@ -65,7 +87,6 @@ function renderColumns(cols) {
      * the col has a span of 24 colums so 12 will take
      * have the width of the screen.
      */
-
     return (
       <Col span={12}>
         <Statistic title={title} value={value} key={index}></Statistic>
