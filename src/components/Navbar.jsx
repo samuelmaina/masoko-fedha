@@ -27,7 +27,7 @@ function renderLogo() {
     <div className="logo-container">
       <Avatar src={logo} size="large" />
       <Typography.Title level={2} className="logo">
-        <Link to="/">Cryptoverse</Link>
+        <Link to="/">Masoko Fedha </Link>
       </Typography.Title>
     </div>
   );

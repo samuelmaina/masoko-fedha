@@ -20,11 +20,12 @@ import {
 
 import { LineChart } from "./index";
 
-import { cryptoApi } from "../services";
+import { cryptoApi, localUtils } from "../services";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { useGetCryptoDetailsQuery, useGetCoinHistoryQuery } = cryptoApi;
+const { convertToKenyaShillings, displayAsKenyaShilling } = localUtils;
 
 function CryptoDetails() {
   const { coinId } = useParams();
@@ -50,7 +51,7 @@ function CryptoDetails() {
       {coinHistory ? (
         <LineChart
           coinHistory={coinHistory}
-          currentPrice={millify(cryptoDetails.price)}
+          currentPrice={cryptoDetails.price}
           coinName={cryptoDetails.name}
         />
       ) : (
@@ -68,8 +69,8 @@ function CryptoDetails() {
           {cryptoDetails.name} {cryptoDetails.slug ? cryptoDetails.slug : ""}
         </Title>
         <p>
-          {cryptoDetails.name} live price in US dollars. View value statistics,
-          market cap and supply.
+          {cryptoDetails.name} live price in Kenya Shilings. View value
+          statistics, market cap and supply.
         </p>
       </Col>
     );
@@ -108,31 +109,34 @@ function CryptoDetails() {
     function renderCoinStats() {
       const stats = [
         {
-          title: "Price to USD",
-          value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`,
+          title: "Price to Kenya Shilling",
+          value: ` ${
+            cryptoDetails?.price && displayAsKenyaShilling(cryptoDetails?.price)
+          }`,
           icon: <DollarCircleOutlined />,
         },
         { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
         {
           title: "24h Volume",
-          value: `$ ${
+          value: `${
             cryptoDetails?.["24hVolume"] &&
-            millify(cryptoDetails?.["24hVolume"])
+            displayAsKenyaShilling(cryptoDetails?.["24hVolume"])
           }`,
           icon: <ThunderboltOutlined />,
         },
         {
           title: "Market Cap",
-          value: `$ ${
-            cryptoDetails?.marketCap && millify(cryptoDetails?.marketCap)
+          value: `${
+            cryptoDetails?.marketCap &&
+            displayAsKenyaShilling(cryptoDetails?.marketCap)
           }`,
           icon: <DollarCircleOutlined />,
         },
         {
           title: "All-time-high(daily avg.)",
-          value: `$ ${
+          value: `${
             cryptoDetails?.allTimeHigh?.price &&
-            millify(cryptoDetails?.allTimeHigh?.price)
+            displayAsKenyaShilling(cryptoDetails.allTimeHigh.price)
           }`,
           icon: <TrophyOutlined />,
         },
@@ -181,17 +185,17 @@ function CryptoDetails() {
         },
         {
           title: "Total Supply",
-          value: `$ ${
+          value: `${
             cryptoDetails?.supply?.total &&
-            millify(cryptoDetails?.supply?.total)
+            displayAsKenyaShilling(cryptoDetails?.supply?.total)
           }`,
           icon: <ExclamationCircleOutlined />,
         },
         {
           title: "Circulating Supply",
-          value: `$ ${
+          value: `${
             cryptoDetails?.supply?.circulating &&
-            millify(cryptoDetails?.supply?.circulating)
+            displayAsKenyaShilling(cryptoDetails?.supply?.circulating)
           }`,
           icon: <ExclamationCircleOutlined />,
         },

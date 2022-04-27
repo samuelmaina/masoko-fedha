@@ -3,8 +3,10 @@ import React from "react";
 import { Row, Col, Typography } from "antd";
 import { Chart as Chartjs } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import { localUtils } from "../services";
 
 const { Title } = Typography;
+const { convertToKenyaShillingsAccurate, displayAsKenyaShilling } = localUtils;
 
 function LineChart({ coinHistory, currentPrice, coinName }) {
   const coinPrices = [];
@@ -13,7 +15,7 @@ function LineChart({ coinHistory, currentPrice, coinName }) {
   const history = coinHistory?.data?.history;
   for (let i = history.length - 1; i >= 0; i--) {
     const { price, timestamp } = history[i];
-    coinPrices.push(price);
+    coinPrices.push(convertToKenyaShillingsAccurate(price));
     coinTimeStamps.push(new Date(timestamp * 1000).toLocaleDateString());
   }
 
@@ -21,7 +23,7 @@ function LineChart({ coinHistory, currentPrice, coinName }) {
     labels: coinTimeStamps,
     datasets: [
       {
-        label: "Price in USD",
+        label: `${coinName} Price Trend`,
         data: coinPrices,
         fill: false,
         backgroundColor: "#0071bd",
@@ -53,7 +55,7 @@ function LineChart({ coinHistory, currentPrice, coinName }) {
             Change: {coinHistory?.data?.change}%
           </Title>
           <Title level={5} className="current-price">
-            Current {coinName} Price: $ {currentPrice}
+            Current {coinName} Price: {displayAsKenyaShilling(currentPrice)}
           </Title>
         </Col>
       </Row>

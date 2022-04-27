@@ -9,7 +9,7 @@ function Footer() {
         level={5}
         style={{ color: "white", textAlign: "center" }}
       >
-        Cryptoverse
+        Masoko Fedha
         <br />
         All rights reserved @ {new Date().getFullYear()}
       </Typography.Title>

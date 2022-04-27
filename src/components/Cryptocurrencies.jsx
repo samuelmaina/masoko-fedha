@@ -4,9 +4,10 @@ import millify from "millify";
 
 import { Card, Row, Col, Input } from "antd";
 
-import { cryptoApi } from "../services";
+import { cryptoApi, localUtils } from "../services";
 
 const { useGetCryptosQuery } = cryptoApi;
+const { displayAsKenyaShilling } = localUtils;
 
 function Cryptocurrencies({ simplified }) {
   const count = simplified ? 10 : 100;
@@ -71,7 +72,7 @@ function renderCryptos(cryptos) {
               />
             }
           >
-            <p> Price : {millify(currency.price)}</p>
+            <p> Price : {displayAsKenyaShilling(currency.price)}</p>
             <p> Market Cap : {millify(currency.marketCap)}</p>
             <p> Daily Change : {millify(currency.change)} %</p>
           </Card>
