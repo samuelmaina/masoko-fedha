@@ -50,7 +50,7 @@ function CryptoDetails() {
       {coinHistory ? (
         <LineChart
           coinHistory={coinHistory}
-          currentPrice={cryptoDetails.price}
+          currentPrice={millify(cryptoDetails.price)}
           coinName={cryptoDetails.name}
         />
       ) : (
