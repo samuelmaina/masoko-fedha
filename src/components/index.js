@@ -6,3 +6,4 @@ export { default as CryptoDetails } from "./CryptoDetails";
 export { default as News } from "./News";
 export { default as Main } from "./Main";
 export { default as Footer } from "./Footer";
+export { default as LineChart } from "./LineChart";

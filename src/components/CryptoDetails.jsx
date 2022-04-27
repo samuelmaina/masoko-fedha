@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { cryptoApi } from "../services";
+import HTMLReactParser from "html-react-parser";
 
 import millify from "millify";
 
@@ -17,115 +17,127 @@ import {
   NumberOutlined,
   ThunderboltOutlined,
 } from "@ant-design/icons";
-import HTMLReactParser from "html-react-parser";
+
+import { LineChart } from "./index";
+
+import { cryptoApi } from "../services";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
-const { useGetCryptoDetailsQuery } = cryptoApi;
+const { useGetCryptoDetailsQuery, useGetCoinHistoryQuery } = cryptoApi;
 
 function CryptoDetails() {
   const { coinId } = useParams();
 
-  const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
+  const { data: cryptoDetailsData, isFetching: isFetchingCryptoDetails } =
+    useGetCryptoDetailsQuery(coinId);
 
   const [timePeriod, setTimePeriod] = useState("7d");
 
-  const cryptoDetails = data?.data?.coin;
+  const { data: coinHistory, isFetching } = useGetCoinHistoryQuery({
+    coinId,
+    timePeriod,
+  });
 
-  if (isFetching) return <div> Loading...</div>;
+  const cryptoDetails = cryptoDetailsData?.data?.coin;
 
-  const time = ["3h", "24h", "7d", "30d", "3m", "1y", "5y"];
-
-  const stats = [
-    {
-      title: "Price to USD",
-      value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`,
-      icon: <DollarCircleOutlined />,
-    },
-    { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
-    {
-      title: "24h Volume",
-      value: `$ ${
-        cryptoDetails?.["24hVolume"] && millify(cryptoDetails?.["24hVolume"])
-      }`,
-      icon: <ThunderboltOutlined />,
-    },
-    {
-      title: "Market Cap",
-      value: `$ ${
-        cryptoDetails?.marketCap && millify(cryptoDetails?.marketCap)
-      }`,
-      icon: <DollarCircleOutlined />,
-    },
-    {
-      title: "All-time-high(daily avg.)",
-      value: `$ ${
-        cryptoDetails?.allTimeHigh?.price &&
-        millify(cryptoDetails?.allTimeHigh?.price)
-      }`,
-      icon: <TrophyOutlined />,
-    },
-  ];
-
-  const genericStats = [
-    {
-      title: "Number Of Markets",
-      value: cryptoDetails?.numberOfMarkets,
-      icon: <FundOutlined />,
-    },
-    {
-      title: "Number Of Exchanges",
-      value: cryptoDetails?.numberOfExchanges,
-      icon: <MoneyCollectOutlined />,
-    },
-    {
-      title: "Aprroved Supply",
-      value: cryptoDetails?.supply?.confirmed ? (
-        <CheckOutlined />
-      ) : (
-        <StopOutlined />
-      ),
-      icon: <ExclamationCircleOutlined />,
-    },
-    {
-      title: "Total Supply",
-      value: `$ ${
-        cryptoDetails?.supply?.total && millify(cryptoDetails?.supply?.total)
-      }`,
-      icon: <ExclamationCircleOutlined />,
-    },
-    {
-      title: "Circulating Supply",
-      value: `$ ${
-        cryptoDetails?.supply?.circulating &&
-        millify(cryptoDetails?.supply?.circulating)
-      }`,
-      icon: <ExclamationCircleOutlined />,
-    },
-  ];
+  if (isFetching || isFetchingCryptoDetails) return <div> Loading...</div>;
 
   return (
     <Col className="coin-detail-container">
+      {renderHeaderInfo()}
+      {renderTimePeriodSelector()}
+      {coinHistory ? (
+        <LineChart
+          coinHistory={coinHistory}
+          currentPrice={cryptoDetails.price}
+          coinName={cryptoDetails.name}
+        />
+      ) : (
+        <div>Loading </div>
+      )}
+      {renderStatsContainer()}
+      {renderCoinInfo()}
+    </Col>
+  );
+
+  function renderHeaderInfo() {
+    return (
       <Col className="coin-heading-container">
         <Title level={2} className="coin-name">
           {cryptoDetails.name} {cryptoDetails.slug ? cryptoDetails.slug : ""}
         </Title>
         <p>
           {cryptoDetails.name} live price in US dollars. View value statistics,
-          market cap and
+          market cap and supply.
         </p>
       </Col>
+    );
+  }
+
+  function renderTimePeriodSelector() {
+    const time = ["3h", "24h", "7d", "30d", "3m", "1y", "5y"];
+    const defaultTime = "Select Time Period";
+    return (
       <Select
-        defaultValue="7d"
+        defaultValue={timePeriod}
         className="select-timeperiod"
         placeholder="Select Time Period"
-        onChange={(period) => setTimePeriod(period)}
+        onChange={(period) => {
+          if (period === defaultTime) return setTimePeriod("7d");
+          setTimePeriod(period);
+        }}
       >
+        <Option value={defaultTime}>{defaultTime}</Option>
         {time.map((date, index) => (
-          <Option key={index}>{date}</Option>
+          <Option key={index} value={date}>
+            {date}
+          </Option>
         ))}
       </Select>
+    );
+  }
+
+  function renderStatsContainer() {
+    return (
       <Col className="stats-container">
+        {renderCoinStats()}
+        {renderGlobalStats()}
+      </Col>
+    );
+    function renderCoinStats() {
+      const stats = [
+        {
+          title: "Price to USD",
+          value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`,
+          icon: <DollarCircleOutlined />,
+        },
+        { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
+        {
+          title: "24h Volume",
+          value: `$ ${
+            cryptoDetails?.["24hVolume"] &&
+            millify(cryptoDetails?.["24hVolume"])
+          }`,
+          icon: <ThunderboltOutlined />,
+        },
+        {
+          title: "Market Cap",
+          value: `$ ${
+            cryptoDetails?.marketCap && millify(cryptoDetails?.marketCap)
+          }`,
+          icon: <DollarCircleOutlined />,
+        },
+        {
+          title: "All-time-high(daily avg.)",
+          value: `$ ${
+            cryptoDetails?.allTimeHigh?.price &&
+            millify(cryptoDetails?.allTimeHigh?.price)
+          }`,
+          icon: <TrophyOutlined />,
+        },
+      ];
+      return (
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
             <Title level={3} className="coin-details-heading">
@@ -143,6 +155,48 @@ function CryptoDetails() {
             ))}
           </Col>
         </Col>
+      );
+    }
+
+    function renderGlobalStats() {
+      const genericStats = [
+        {
+          title: "Number Of Markets",
+          value: cryptoDetails?.numberOfMarkets,
+          icon: <FundOutlined />,
+        },
+        {
+          title: "Number Of Exchanges",
+          value: cryptoDetails?.numberOfExchanges,
+          icon: <MoneyCollectOutlined />,
+        },
+        {
+          title: "Aprroved Supply",
+          value: cryptoDetails?.supply?.confirmed ? (
+            <CheckOutlined />
+          ) : (
+            <StopOutlined />
+          ),
+          icon: <ExclamationCircleOutlined />,
+        },
+        {
+          title: "Total Supply",
+          value: `$ ${
+            cryptoDetails?.supply?.total &&
+            millify(cryptoDetails?.supply?.total)
+          }`,
+          icon: <ExclamationCircleOutlined />,
+        },
+        {
+          title: "Circulating Supply",
+          value: `$ ${
+            cryptoDetails?.supply?.circulating &&
+            millify(cryptoDetails?.supply?.circulating)
+          }`,
+          icon: <ExclamationCircleOutlined />,
+        },
+      ];
+      return (
         <Col className="other-stats-info">
           <Col className="coin-value-statistics-heading">
             <Title level={3} className="coin-details-heading">
@@ -160,7 +214,11 @@ function CryptoDetails() {
             ))}
           </Col>
         </Col>
-      </Col>
+      );
+    }
+  }
+  function renderCoinInfo() {
+    return (
       <Col className="coin-desc-link">
         <Row className="coin-desc">
           <Title level={3} className="coin-details-heading">
@@ -186,8 +244,8 @@ function CryptoDetails() {
           </Col>
         </Row>
       </Col>
-    </Col>
-  );
+    );
+  }
 }
 
 export default CryptoDetails;

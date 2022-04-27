@@ -47,8 +47,11 @@ function News({ simplified }) {
           <Select
             className="select-news"
             placeholder="Select Crypto to show news for"
+            defaultValue={newsCategory}
             optionFilterProp="children"
             onChange={(value) => {
+              //there is no query for all hence pass cryptocurrency
+              //which queries for all the crypocurrency news.
               if (value === "All") {
                 return setNewsCategory("Cryptocurrency");
               }
