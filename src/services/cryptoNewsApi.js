@@ -1,6 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, RequestCreator } from "./utils";
 import { RAPID_KEY } from "../config";
-import { constructEndPoints, RequestCreator } from "./utils";
 
 const baseUrl = "https://bing-news-search1.p.rapidapi.com";
 
@@ -19,10 +18,6 @@ const endpoints = {
     ),
 };
 
-export const cryptoNewsApi = createApi({
-  reducerPath: "cryptoNewsApi",
-  baseQuery: fetchBaseQuery({ baseUrl }),
-  endpoints: constructEndPoints(endpoints),
-});
+export const cryptoNewsApi = createApi("cryptoNewsApi", baseUrl, endpoints);
 
 export const { useGetCryptoNewsQuery } = cryptoNewsApi;
