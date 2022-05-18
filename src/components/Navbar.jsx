@@ -24,7 +24,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="nav-container">
         {renderLogo()}
-        {dropDownMenu()}
+        {dropDownButton()}
         {shouldRenderMenu && renderMenu()}
       </div>
     </div>
@@ -42,7 +42,7 @@ const Navbar = () => {
     else setShouldRenderMenu(true);
   }
 
-  function dropDownMenu() {
+  function dropDownButton() {
     return (
       <Button
         className="menu-control-container"
