@@ -8,7 +8,8 @@ import { Typography, Row, Col, Statistic } from "antd";
 
 import { cryptoApi } from "../services";
 
-import { Cryptocurrencies, News } from "./index";
+import { Cryptocurrencies, News, Loader } from "./index";
+
 const { useGetCryptosQuery } = cryptoApi;
 
 const { Title } = Typography;
@@ -19,7 +20,7 @@ function HomePage() {
 
   const globalStats = data?.data?.stats;
 
-  if (isFetching) return <div>Loading...</div>;
+  if (isFetching) return <Loader />;
 
   return (
     <>
