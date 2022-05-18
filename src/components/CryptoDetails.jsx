@@ -9,6 +9,7 @@ import { LineChart } from "./index";
 import { cryptoApi } from "../services";
 import { basics } from "./Natives";
 import { stats } from "../data";
+import Loader from "./Loader";
 
 const { cryptoStats, genericStats } = stats;
 
@@ -40,7 +41,7 @@ function CryptoDetails() {
 
   const cryptoDetails = cryptoDetailsData?.data?.coin;
 
-  if (isFetching || isFetchingCryptoDetails) return <div> Loading...</div>;
+  if (isFetching || isFetchingCryptoDetails) return <Loader />;
 
   return createColumn(
     <>

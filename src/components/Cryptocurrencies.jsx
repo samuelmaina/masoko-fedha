@@ -5,6 +5,7 @@ import millify from "millify";
 import { Card, Row, Col, Input } from "antd";
 
 import { cryptoApi, localUtils } from "../services";
+import { Loader } from "./index";
 
 const { useGetCryptosQuery } = cryptoApi;
 const { displayAsKenyaShilling } = localUtils;
@@ -26,7 +27,7 @@ function Cryptocurrencies({ simplified }) {
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
 
-  if (isFetching) return <div> Loading...</div>;
+  if (isFetching) return <Loader />;
 
   try {
     return (
@@ -37,7 +38,7 @@ function Cryptocurrencies({ simplified }) {
             {renderCryptos(cryptos)}
           </Row>
         ) : (
-          <div> Nothing to show </div>
+          <Loader />
         )}
       </>
     );
