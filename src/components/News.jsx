@@ -4,6 +4,7 @@ import moment from "moment";
 
 import { Select, Typography, Row, Col, Avatar, Card } from "antd";
 import { cryptoNewsApi, cryptoApi } from "../services";
+import Loader from "./Loader";
 
 const { useGetCryptoNewsQuery } = cryptoNewsApi;
 
@@ -25,8 +26,8 @@ function News({ simplified }) {
 
   const { data } = useGetCryptosQuery(100);
 
-  if (isFetching) return <div> Fetching the news</div>;
-  if (!cryptoNews?.value) return <div> Loading...</div>;
+  if (isFetching) return <Loader />;
+  if (!cryptoNews?.value) return <Loader />;
 
   return (
     <Row gutter={[24, 24]}>
