@@ -1,4 +1,17 @@
-function constructEndPoints(endpoints) {
+import {
+  createApi as creator,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
+
+function createApi(reducerPath, baseUrl, endpoints) {
+  return creator({
+    reducerPath,
+    baseQuery: fetchBaseQuery({ baseUrl }),
+    endpoints: constructEndPointsObject(endpoints),
+  });
+}
+
+function constructEndPointsObject(endpoints) {
   return (builder) => {
     const result = {};
     for (const endpoint in endpoints) {
@@ -23,4 +36,4 @@ class RequestCreator {
   }
 }
 
-export { constructEndPoints, RequestCreator };
+export { createApi, RequestCreator };
