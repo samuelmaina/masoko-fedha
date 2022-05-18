@@ -75,8 +75,8 @@ function renderMenu() {
       to: "/cryptocurrencies",
       displayText: "Cryptocurrencies",
     },
-    { Icon: MoneyCollectOutlined, to: "/exchanges", displayText: "Exchanges" },
     { Icon: BuildOutlined, to: "/news", displayText: "News" },
+    { Icon: MoneyCollectOutlined, to: "/exchanges", displayText: "Exchanges" },
   ];
 
   return (
