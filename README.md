@@ -1,15 +1,26 @@
 # MasokoFedha application
-It is frontend application that is build in React.
-Users can view  global cryptocurrencies  stats and individual currency stats.
-They can can also  browse overall cryptocurrency news or specific currency news.
-The app also allows viewing of currency exchanges for different timespans.
-They can also few the price trends of the  different cryptocurrencies in different time spans such as 5 yrs , 3 days etc.
+A  frontend cryptocurrency  application build in React.
+
+## Specs
+* Users can view  global cryptocurrencies  stats 
+    * Total number of crytocurrencies in the world.
+    * Their total trading volume in the last 24 hrs.
+    * Top ten currencies and their current prices in Kenyan shillings.
+    * Total number of markets
+* individual currency stats. <br> 
+    * Why the currency exists 
+    * Different cryptocurrency website, social media hundles and gitub link
+* Can can browse overall cryptocurrency news or specific currency news.<br> 
+    * shows the source website and the how long ago the news were posted. Clink the news card to read the whole article.
+* Can view the price trends (presented in a graph) of the  different cryptocurrencies in different time spans such as 5 yrs , 3 days etc.<br>
+* Allow viewing of currency exchanges for different timespans.
+
 
 ## Technologies 
-React 16.8+ 
-Redux toolkit
-antd design
-coinranking api from Rapid Api
+* React 16.8+ 
+* Redux toolkit
+* antd design
+* coinranking api from Rapid Api
 
 
 In the project directory, you can run:
@@ -33,4 +44,5 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+![masoko_1](https://user-images.githubusercontent.com/55924723/167011196-63002f3c-e7e3-4125-b6b2-eaf6f47eb4d5.png)
 
