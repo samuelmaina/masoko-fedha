@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, Menu, Typography, Avatar } from "antd";
 import { Link } from "react-router-dom";
@@ -8,18 +8,52 @@ import {
   FundOutlined,
   MoneyCollectOutlined,
   BuildOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import { logo } from "../images";
 
 const Navbar = () => {
+  const [shouldRenderMenu, setShouldRenderMenu] = useState(true);
+  const [screenSize, setScreenSize] = useState(null);
+
+  useEffect(changeScreenSize, []);
+
+  useEffect(decideToRender, [screenSize]);
+
   return (
     <div className="navbar">
       <div className="nav-container">
         {renderLogo()}
-        {renderMenu()}
+        {dropDownMenu()}
+        {shouldRenderMenu && renderMenu()}
       </div>
     </div>
   );
+
+  function changeScreenSize() {
+    const handleSize = () => setScreenSize(window.innerWidth);
+    window.addEventListener("resize", handleSize);
+    handleSize();
+    return () => window.removeEventListener("resize", handleSize);
+  }
+
+  function decideToRender() {
+    if (screenSize < 786) setShouldRenderMenu(false);
+    else setShouldRenderMenu(true);
+  }
+
+  function dropDownMenu() {
+    return (
+      <Button
+        className="menu-control-container"
+        onClick={() => {
+          setShouldRenderMenu(!shouldRenderMenu);
+        }}
+      >
+        <MenuOutlined />
+      </Button>
+    );
+  }
 };
 
 function renderLogo() {
