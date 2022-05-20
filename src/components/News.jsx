@@ -87,8 +87,8 @@ function renderNewsCard(news) {
             styles={
               //to avoid overflow of the images
               {
-                maxHeight: "100px",
-                maxWidth: "200px",
+                innerHeight: "50%",
+                innerWidth: "50%",
               }
             }
             src={news?.image?.thumbnail?.contentUrl || demoImage}
