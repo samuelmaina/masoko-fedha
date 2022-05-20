@@ -1,19 +1,31 @@
 import React from "react";
 
-function Routes() {
+import { Route, Routes } from "react-router-dom";
+
+import {
+  HomePage,
+  Exchanges,
+  Cryptocurrencies,
+  CryptoDetails,
+  News,
+} from "./index";
+
+const urls = [
+  { path: "/", element: HomePage },
+  { path: "/cryptocurrencies", element: Cryptocurrencies },
+  { path: "/exchanges", element: Exchanges },
+  { path: "/crypto/:coinId", element: CryptoDetails },
+  { path: "/news", element: News },
+];
+
+function AppRoutes() {
   return (
     <Routes>
-      <Route exact path="/" element={<HomePage />}></Route>
-      <Route exact path="/exchanges" element={<Exchanges />}></Route>
-      <Route
-        exact
-        path="/cryptocurrencies"
-        element={<Cryptocurrencies />}
-      ></Route>
-      <Route exact path="/crypto/:coinId" element={<CryptoDetails />}></Route>
-      <Route exact path="/news" element={<News />}></Route>
+      {urls.map((url) => (
+        <Route exact path={url.path} element={<url.element />}></Route>
+      ))}
     </Routes>
   );
 }
 
-export default Routes;
+export default AppRoutes;
