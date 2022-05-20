@@ -1,4 +1,5 @@
 export { default as Navbar } from "./Navbar";
+export { default as Routes } from "./Routes";
 export { default as Exchanges } from "./Exchanges";
 export { default as HomePage } from "./HomePage";
 export { default as Cryptocurrencies } from "./Cryptocurrencies";
