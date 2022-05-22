@@ -24,7 +24,7 @@ function HomePage() {
 
   return (
     <>
-      <Spinner />;{renderGlobalStats(globalStats)}
+      {renderGlobalStats(globalStats)}
       {renderTopCryptos(introductoryNoOfCryptos)}
       {/** the number of news being received is very small hence, only a fixed number of news will be rendered. */}
       {renderTopNews()}
