@@ -7,9 +7,7 @@ import { Footer, Routes } from "./index";
 function Main() {
   return (
     <div className="main">
-      <Layout>
-        <Routes />
-      </Layout>
+      <Routes />
       <Footer />
     </div>
   );

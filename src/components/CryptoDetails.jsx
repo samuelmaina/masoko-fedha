@@ -4,12 +4,11 @@ import HTMLReactParser from "html-react-parser";
 
 import { Typography, Col, Row } from "antd";
 
-import { LineChart } from "./index";
+import { LineChart, Spinner } from "./index";
 
 import { cryptoApi } from "../services";
 import { basics } from "./Natives";
 import { stats } from "../data";
-import Loader from "./Loader";
 
 const { cryptoStats, genericStats } = stats;
 
@@ -41,7 +40,7 @@ function CryptoDetails() {
 
   const cryptoDetails = cryptoDetailsData?.data?.coin;
 
-  if (isFetching || isFetchingCryptoDetails) return <Loader />;
+  if (isFetching || isFetchingCryptoDetails) return <Spinner />;
 
   return createColumn(
     <>

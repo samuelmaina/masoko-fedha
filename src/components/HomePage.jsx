@@ -8,7 +8,7 @@ import { Typography, Row, Col, Statistic } from "antd";
 
 import { cryptoApi } from "../services";
 
-import { Cryptocurrencies, News, Loader } from "./index";
+import { Cryptocurrencies, News, Spinner } from "./index";
 
 const { useGetCryptosQuery } = cryptoApi;
 
@@ -20,11 +20,11 @@ function HomePage() {
 
   const globalStats = data?.data?.stats;
 
-  if (isFetching) return <Loader />;
+  if (isFetching) return <Spinner />;
 
   return (
     <>
-      {renderGlobalStats(globalStats)}
+      <Spinner />;{renderGlobalStats(globalStats)}
       {renderTopCryptos(introductoryNoOfCryptos)}
       {/** the number of news being received is very small hence, only a fixed number of news will be rendered. */}
       {renderTopNews()}

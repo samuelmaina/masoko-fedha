@@ -60,7 +60,7 @@ function renderLogo() {
   return (
     <div className="logo-container">
       <Avatar src={logo} size="large" />
-      <Typography.Title level={2} className="logo">
+      <Typography.Title level={3} className="logo">
         <Link to="/">Masoko Fedha</Link>
       </Typography.Title>
     </div>
