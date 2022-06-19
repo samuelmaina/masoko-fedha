@@ -151,7 +151,7 @@ function CryptoDetails() {
                 <Text key={1}>{icon}</Text>
                 <Text key={2}>{title}</Text>
               </Col>
-              {/* <Text className="stats">{value} </Text> */}
+              <Text className="stats">{value} </Text>
             </Col>
           ))}
         </>,

@@ -22,7 +22,7 @@ function Cryptocurrencies({ simplified }) {
 
   useEffect(() => {
     const filteredData = cryptosList?.data?.coins.filter((coin) => {
-      return coin.name.toLowerCase().includes(searchTerm);
+      return coin.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
